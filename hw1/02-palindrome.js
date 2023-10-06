@@ -4,7 +4,7 @@ const response = document.getElementById("response");
 elem.addEventListener("input", handleInput);
 
 function handleInput() {
-  const inputNumber = parseInt(this.value);
+  const inputNumber = parseFloat(this.value);
 
   if (!isNaN(inputNumber) && inputNumber >= 0) {
     const isPalin = isPalindrome(inputNumber);
