@@ -113,7 +113,7 @@ origin	git@github.com:student/frontend-homework.git (fetch)
 origin	git@github.com:student/frontend-homework.git (push)
 ```
 
-3. Make sure that you are pushing to your remote and not to my remote. 
+3. Make sure that you are pushing to your remote and not to my remote.
 
 ### Submitting a Pull Request (PR)
 
