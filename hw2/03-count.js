@@ -2,17 +2,31 @@ input = document.getElementById("user-input");
 input.addEventListener("keydown", handleKeyDown);
 
 function handleKeyDown() {
-  let userInput = document.getElementById("user-input").value;
-  const paragraph = document.getElementById("text").textContent;
-  let text = document.getElementById("text");
+  let userInput = document.getElementById("user-input").value.trim();
+  const textElement = document.getElementById("text");
+  const text = textElement.textContent;
 
-  if (paragraph.includes(userInput)) {
-    //creating an regular expression for a global and case-insensitive matching
-    let allWords = new RegExp(`${userInput}`, "gi");
-    //using mark to highlight the searched word.
-    text.innerHTML = text.textContent.replace(
-      allWords,
-      (match) => `<mark>${match}</mark>`
-    );
+  if (userInput === "") {
+    // Clear any previous highlights when the input is empty
+    textElement.innerHTML = text;
+    return;
   }
+
+  // Split the text into an array of words
+  const words = text.split(/\s+/);
+
+  // Map each word to either the original word or a highlighted version
+  const highlightedText = words
+    .map((word) => {
+      const normalizedWord = word.replace(/[.,!?]/g, ""); // Remove punctuation for matching
+      if (normalizedWord.toLowerCase() === userInput.toLowerCase()) {
+        return `<mark>${word}</mark>`;
+      } else {
+        return word;
+      }
+    })
+    .join(" "); // Join the words back into a string
+
+  // Update the HTML with the highlighted text
+  textElement.innerHTML = highlightedText;
 }
