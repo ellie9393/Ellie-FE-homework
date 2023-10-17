@@ -2,12 +2,13 @@ input = document.getElementById("user-input");
 input.addEventListener("keydown", handleKeyDown);
 
 function handleKeyDown() {
+  //remove whitespace characters from the start and end of a string using trim
   let userInput = document.getElementById("user-input").value.trim();
   const textElement = document.getElementById("text");
   const text = textElement.textContent;
 
+  // Clear any previous highlights when the input is empty
   if (userInput === "") {
-    // Clear any previous highlights when the input is empty
     textElement.innerHTML = text;
     return;
   }
