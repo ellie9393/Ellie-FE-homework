@@ -1,5 +1,5 @@
 // Add your code here
-let input = document.getElementById("userinput");
+let input = document.getElementById("intervalseconds");
 const background = document.querySelector("body");
 let button = document.getElementById("button");
 button.addEventListener("click", changColor);
@@ -28,14 +28,14 @@ function changColor() {
     button.value = "Start";
     button.style.background = "blue";
   }
-}
+};
 
-function color() {
+const color = function color() {
   let color = "";
   for (let i = 0; i < 3; i++) {
     color += Math.floor(Math.random() * 256);
     color += ",";
   }
-  rgbacolor = "rgba(" + color + "0.5)";
+  const rgbacolor = "rgba(" + color + "0.5)";
   return rgbacolor;
-}
+};

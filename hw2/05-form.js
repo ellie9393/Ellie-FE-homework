@@ -20,8 +20,12 @@ form.addEventListener("submit", function (e) {
   console.log("Full Name:", fullName);
   console.log("Email:", email);
   console.log("Registration Status:", registrationStatus);
-  console.log("Programming Checkbox:", programmingCheckbox);
-  console.log("OS Checkbox:", osCheckbox);
-  console.log("Full Stack Checkbox:", fullstackCheckbox);
+  console.log("courses taken:");
+  if (programmingCheckbox){
+    console.log("Programming Languages");}
+  if (osCheckbox){
+    console.log("Operating Systems");}
+  if (fullstackCheckbox) {
+    console.log("Full Stack Web Development");}
   console.log("Comment:", comment);
 });
