@@ -26,3 +26,4 @@ function isPalindrome(input) {
   const reversedNumber = number.split("").reverse().join("");
   return number === reversedNumber;
 }
+
