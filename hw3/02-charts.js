@@ -28,54 +28,52 @@ const borderColors = [
 
 // url for the Thrones API
 const url = "https://thronesapi.com/api/v2/Characters";
-const fetchData = async (url) => {
 
-  try {
-
-    const response = await fetch(url);
-    const data = await response.json();
-
-    const count = function count () {
-      const counts = {};
-
-      data.forEach((character) => {
-        if (character.family) {
-          const family = correctedFamily(character.family);
-
-          if (counts[family]) {
-            counts[family] += 1;
-          } else {
-            counts[family] = 1;
-          }
-        } else {
-          //skipping
-        }
-      });
-    return counts;
-    };
-    
-  } catch (error) {
-    console.error(error);
-  }
+const fetchData = (url) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      resolve(data);
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 
-const correctedFamily = function corrcetedFamily(name) {
+const correctedFamily = (name) => {
   return name.toLowerCase();
 };
 
-const group = function group(houses) {};
+const processCharacterData = (data) => {
+  const counts = {};
+  data.forEach((character) => {
+    if (character.family) {
+      const family = correctedFamily(character.family);
 
-const renderChart = () => {
+      if (counts[family]) {
+        counts[family] += 1;
+      } else {
+        counts[family] = 1;
+      }
+    } else {
+      // Skipping
+    }
+  });
+  return counts;
+};
+
+const renderChart = (counts) => {
   const donutChart = document.querySelector(".donut-chart");
 
   new Chart(donutChart, {
     type: "doughnut",
     data: {
-      labels: ["label", "label", "label", "label"],
+      labels: Object.keys(counts), // Use family names as labels
       datasets: [
         {
           label: "My First Dataset",
-          data: [1, 12, 33, 5],
+          data: Object.values(counts), // Use counts as data
           backgroundColor: backgroundColors,
           borderColor: borderColors,
           borderWidth: 1,
@@ -85,5 +83,11 @@ const renderChart = () => {
   });
 };
 
-fetchData(url);
-renderChart();
+fetchData(url)
+  .then((data) => {
+    const counts = processCharacterData(data);
+    renderChart(counts);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
