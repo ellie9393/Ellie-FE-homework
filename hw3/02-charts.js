@@ -28,6 +28,44 @@ const borderColors = [
 
 // url for the Thrones API
 const url = 'https://thronesapi.com/api/v2/Characters';
+const fetchData = async (url) => {
+
+  try {
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const counts = {};
+
+    data.forEach((character) => {
+
+      if (character.family) {
+        const family = correctedFamily(character.family);
+      
+        if (counts[family]) {
+          counts[family] += 1;
+        } else {
+         counts[family] = 1;
+        }
+      } else {
+        //skipping
+      }
+    });
+
+    console.log(counts);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const correctedFamily = function corrcetedFamily (name) {
+   
+  return name.toLowerCase();
+}
+
+const group = function group (houses){
+
+}
 
 const renderChart = () => {
   const donutChart = document.querySelector('.donut-chart');
@@ -49,4 +87,5 @@ const renderChart = () => {
   });
 };
 
+fetchData(url);
 renderChart();
