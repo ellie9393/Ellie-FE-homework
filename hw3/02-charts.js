@@ -42,7 +42,25 @@ const fetchData = (url) => {
 };
 
 const correctedFamily = (name) => {
-  return name.toLowerCase();
+  name = name.toLowerCase();
+  if (name.startsWith("house")) {
+    let n = name.split(" ");
+    name = n[1];
+  }
+  if (name === "lanister") {
+    name = "lannister";
+  }
+  if (name === "targaryan") {
+    name = "targaryen";
+  }
+  if (name === "unkown" || name === "none") {
+    name = "unknown";
+  }
+  if (name === "lorathi") {
+    name = "lorath";
+  }
+
+  return name;
 };
 
 const processCharacterData = (data) => {
@@ -60,20 +78,36 @@ const processCharacterData = (data) => {
       // Skipping
     }
   });
+  console.log(counts);
   return counts;
 };
 
-const renderChart = (counts) => {
+const group = (allhouses) => {
+  const groupfamilies = {};
+  groupfamilies["minorities"] = 0;
+
+  Object.entries(allhouses).forEach(([family, count]) => {
+    if (count >= 3) {
+      groupfamilies[family] = count;
+    } else {
+      groupfamilies["minorities"] += count;
+    }
+  });
+  console.log(groupfamilies);
+  return groupfamilies;
+};
+
+const renderChart = (grouphouses) => {
   const donutChart = document.querySelector(".donut-chart");
 
   new Chart(donutChart, {
     type: "doughnut",
     data: {
-      labels: Object.keys(counts), // Use family names as labels
+      labels: Object.keys(grouphouses), // Use family names as labels
       datasets: [
         {
           label: "My First Dataset",
-          data: Object.values(counts), // Use counts as data
+          data: Object.values(grouphouses), // Use counts as data
           backgroundColor: backgroundColors,
           borderColor: borderColors,
           borderWidth: 1,
@@ -86,7 +120,8 @@ const renderChart = (counts) => {
 fetchData(url)
   .then((data) => {
     const counts = processCharacterData(data);
-    renderChart(counts);
+    const grouphouses = group(counts);
+    renderChart(grouphouses);
   })
   .catch((error) => {
     console.error(error);
