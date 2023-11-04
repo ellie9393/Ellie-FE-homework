@@ -1,6 +1,6 @@
 const url = "https://thronesapi.com/api/v2/Characters";
 
-let list = document.querySelector("#list");
+const list = document.querySelector("#list");
 
 const fetchData = (url) => {
   return new Promise(async (resolve, reject) => {
@@ -15,10 +15,10 @@ const fetchData = (url) => {
 };
 
 const createCharacterElements = (character) => {
-  let col = document.createElement("div");
+  const col = document.createElement("div");
   col.classList.add("col-3", "p-0", "m-2");
 
-  let figure = document.createElement("figure");
+  const figure = document.createElement("figure");
   figure.classList.add("figure", "h-100");
 
   figure.addEventListener("mouseover", () => {
@@ -31,12 +31,12 @@ const createCharacterElements = (character) => {
     figure.style.color = "";
   });
 
-  let img = document.createElement("img");
-  img.classList.add("figure-img", "img-fluid");
+  const img = document.createElement("img");
+  img.classList.add("figure-img", "img-fluid", "m-3");
   img.src = character.imageUrl;
-  img.alt = character.image;
+  img.alt = "a picture of ${character.image}";
 
-  let figcaption = document.createElement("figcaption");
+  const figcaption = document.createElement("figcaption");
   figcaption.classList.add("fw-bold", "p-2", "h-25", "d-inline-block");
   figcaption.innerHTML = character.fullName + "<br>" + character.title;
 
@@ -48,7 +48,7 @@ const createCharacterElements = (character) => {
 };
 
 const createRows = (characters) => {
-  let row = document.createElement("div");
+  const row = document.createElement("div");
   row.classList.add(
     "row",
     "w-75",
@@ -69,7 +69,7 @@ fetchData(url)
     createRows(data);
   })
   .catch((error) => {
-    let p = document.createElement("p");
+    const p = document.createElement("p");
     p.innerHTML = "An error occurred. Please try again.";
     list.appendChild(p);
   });

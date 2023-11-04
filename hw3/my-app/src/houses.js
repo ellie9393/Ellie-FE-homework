@@ -118,7 +118,7 @@ function Houses() {
             labels: Object.keys(chartData),
             datasets: [
               {
-                label: "My First Dataset",
+                label: "characters's families",
                 data: Object.values(chartData),
                 backgroundColor: backgroundColors,
                 borderColor: borderColors,
